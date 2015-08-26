@@ -1,10 +1,10 @@
 # dwm version
-VERSION = 6.0
+VERSION = 6.0-modified
 
 # Customize below to fit your system
 
 # paths
-PREFIX = /usr/local
+PREFIX = ~/.local
 MANPREFIX = ${PREFIX}/share/man
 
 X11INC = /usr/X11R6/include
