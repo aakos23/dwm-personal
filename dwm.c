@@ -264,6 +264,9 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 static void bstack(Monitor *m);
+static Client *prevtiled(Client *c);
+static void pushup(const Arg *arg);
+static void pushdown(const Arg *arg);
 
 /* variables */
 static const char broken[] = "broken";
@@ -2220,6 +2223,66 @@ bstack(Monitor *m) {
 			tx += WIDTH(c);
 		}
 }
+
+Client *
+prevtiled(Client *c) {
+	Client *p, *r;
+
+	for(p = selmon->clients, r = NULL; p && p != c; p = p->next)
+		if(!p->isfloating && ISVISIBLE(p))
+			r = p;
+	return r;
+}
+
+void
+pushup(const Arg *arg) {
+	Client *sel = selmon->sel;
+	Client *c;
+
+	if(!sel || sel->isfloating)
+		return;
+	if((c = prevtiled(sel))) {
+		/* attach before *c */
+		detach(sel);
+		sel->next = c;
+		if(selmon->clients == c)
+			selmon->clients = sel;
+		else {
+			for(c = selmon->clients; c->next != sel->next; c = c->next);
+			c->next = sel;
+		}
+	} else {
+		/* move to the end */
+		for(c = sel; c->next; c = c->next);
+		detach(sel);
+		sel->next = NULL;
+		c->next = sel;
+	}
+	focus(sel);
+	arrange(selmon);
+}
+
+void
+pushdown(const Arg *arg) {
+	Client *sel = selmon->sel;
+	Client *c;
+
+	if(!sel || sel->isfloating)
+		return;
+	if((c = nexttiled(sel->next))) {
+		/* attach after c */
+		detach(sel);
+		sel->next = c->next;
+		c->next = sel;
+	} else {
+		/* move to the front */
+		detach(sel);
+		attach(sel);
+	}
+	focus(sel);
+	arrange(selmon);
+}
+
 
 int
 main(int argc, char *argv[]) {
