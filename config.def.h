@@ -33,12 +33,12 @@ static const Layout layouts[] = {
 };
 
 /* tagging */
-static const char *tags[] = { 
+static const Tag tags[] = { 
 	/* name       layout           mfact    nmaster */
-    {"1"          &layouts[2],};   -1,      -1 },
-    {"2"          &layouts[2],};   -1,      -1 },
-    {"3"          &layouts[2],};   -1,      -1 },
-    {"4"          &layouts[1],};   -1,      -1 },
+	{"1",         &layouts[2],     -1,      -1 },
+	{"2",         &layouts[2],     -1,      -1 },
+	{"3",         &layouts[2],     -1,      -1 },
+	{"4",         &layouts[1],     -1,      -1 },
 };
 
 /* key definitions */
