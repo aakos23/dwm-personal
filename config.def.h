@@ -13,8 +13,6 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const Bool showbar           = True;     /* False means no bar */
 static const Bool topbar            = True;     /* False means bottom bar */
 
-/* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
@@ -32,6 +30,15 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+};
+
+/* tagging */
+static const char *tags[] = { 
+	/* name       layout           mfact    nmaster */
+    {"1"          &layouts[2],};   -1,      -1 },
+    {"2"          &layouts[2],};   -1,      -1 },
+    {"3"          &layouts[2],};   -1,      -1 },
+    {"4"          &layouts[1],};   -1,      -1 },
 };
 
 /* key definitions */
